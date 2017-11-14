@@ -1,0 +1,89 @@
+parserOptions:
+  sourceType: module
+env:
+  es6: true
+  browser: true
+globals:
+  states: false
+  _MEIQIA: false
+  _hmt: false
+  config_version: false
+plugins:
+  - react
+extends:
+  - plugin:react/recommended
+  - airbnb
+rules:
+  camelcase: off
+  generator-star-spacing: off
+  consistent-return: off
+  global-require: off
+  no-else-return: off
+  no-restricted-syntax: off
+  no-use-before-define: off
+  no-nested-ternary: off
+  arrow-body-style: off
+  no-bitwise: off
+  no-shadow: off
+  no-cond-assign: off
+  require-yield: warn
+  no-multi-assign: off
+  max-len: off
+  no-plusplus: off
+  no-underscore-dangle: off
+  new-cap: off
+  no-param-reassign: off
+  no-continue: off
+  no-mixed-operators: off
+  object-property-newline: off
+  class-methods-use-this: off
+  no-console:
+    - error
+    - allow:
+      - warn
+      - error
+  no-unused-vars:
+    - error
+    - args: none
+  no-unused-expressions:
+    - warn
+    - allowShortCircuit: true
+      allowTernary: true
+  func-names:
+    - warn
+    - as-needed
+  comma-dangle:
+    - error
+    - arrays: only-multiline
+      objects: only-multiline
+      imports: only-multiline
+      exports: only-multiline
+      functions: never
+
+  import/no-unresolved: off
+  import/extensions: off
+  import/prefer-default-export: off
+  import/no-extraneous-dependencies: off
+
+  jsx-a11y/no-static-element-interactions: off
+  jsx-a11y/img-redundant-alt: off
+  jsx-a11y/anchor-has-content: off
+  jsx-a11y/label-has-for: off
+
+  react/no-array-index-key: off
+  react/require-default-props: off
+  react/no-danger: off
+  react/sort-comp: off
+  react/no-multi-comp: off
+  react/no-string-refs: off
+  react/forbid-prop-types: off
+  react/no-did-mount-set-state: off
+  react/self-closing-comp: off
+  react/jsx-no-target-blank: off
+  react/jsx-no-bind: off
+  react/prop-types: off
+  react/prefer-stateless-function: off
+  react/jsx-filename-extension:
+    - warn
+    - extensions:
+      - .js

@@ -1,0 +1,16 @@
+node_modules/
+bower_components/
+.DS_Store
+*.log
+config.less
+config.js
+public/
+
+.happypack/
+.idea/
+beikaodi-frontend.iml
+.tags
+module-core/vendors/*
+public.tar.gz
+version.json
+tmp/

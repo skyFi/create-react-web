@@ -1,0 +1,32 @@
+{
+  "name": "create-react-web",
+  "version": "0.0.2",
+  "description": "easy to create react web project.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": "git+https://github.com/skyFi/create-react-web.git",
+  "keywords": [
+    "react",
+    "web",
+    "starter",
+    "project"
+  ],
+  "author": "skylor",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/skyFi/create-react-web/issues"
+  },
+  "homepage": "https://github.com/skyFi/create-react-web#readme",
+  "dependencies": {
+    "compression": "^1.7.1",
+    "cookie-parser": "^1.4.3",
+    "ejs": "^2.5.7",
+    "express": "^4.16.2",
+    "gulp": "^3.9.1",
+    "rainbowlog": "^2.0.2",
+    "react": "^16.1.1",
+    "react-router": "^4.2.0"
+  }
+}
