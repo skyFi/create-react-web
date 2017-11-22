@@ -4,13 +4,12 @@ bower_components/
 *.log
 config.less
 config.js
-public/
 
+public/
 .happypack/
 .idea/
-beikaodi-frontend.iml
+*.iml
 .tags
-module-core/vendors/*
-public.tar.gz
-version.json
+vendors/*
+*.tar.gz
 tmp/

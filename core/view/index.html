@@ -3,8 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <title>Title</title>
+
+  <% for (var i = 0; i < dns.length; i++) { %>
+  <link rel="dns-prefetch" href="//<%= dns[i] %>" />
+  <% } %>
+
+  <link rel="stylesheet" type="text/css" href="<%= cdn %>/page.<%= version %>.css<%= bundlePostfix %>">
 </head>
 <body>
+<h1><%= version %></h1>
+<div id="root"><%- html %></div>
+
+<script defer type="text/javascript" src="<%= cdn %>/vendors.<%= version %>.js"></script>
+<script defer type="text/javascript" src="<%= cdn %>/config.<%= version %>.js"></script>
+<script defer type="text/javascript" src="<%= cdn %>/page.<%= version %>.js<%= bundlePostfix %>"></script>
 
 </body>
 </html>

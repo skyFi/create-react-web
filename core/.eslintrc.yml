@@ -1,4 +1,4 @@
-parserOptions:
+.eslintrc.ymlparserOptions:
   sourceType: module
 env:
   es6: true
