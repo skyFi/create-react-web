@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <title>Title</title>
 
+
+  <meta http-equiv="Content-Security-Policy" content="<%=  %>">
   <% for (var i = 0; i < dns.length; i++) { %>
   <link rel="dns-prefetch" href="//<%= dns[i] %>" />
   <% } %>
@@ -11,9 +13,11 @@
   <link rel="stylesheet" type="text/css" href="<%= cdn %>/page.<%= version %>.css<%= bundlePostfix %>">
 </head>
 <body>
-<h1><%= version %></h1>
 <div id="root"><%- html %></div>
 
+<script>
+  window.__INITIAL_STATE__ = JSON.parse(`<%- __INITIAL_STATE__ %>`);
+</script>
 <script defer type="text/javascript" src="<%= cdn %>/vendors.<%= version %>.js"></script>
 <script defer type="text/javascript" src="<%= cdn %>/config.<%= version %>.js"></script>
 <script defer type="text/javascript" src="<%= cdn %>/page.<%= version %>.js<%= bundlePostfix %>"></script>

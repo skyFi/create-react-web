@@ -1,20 +1,19 @@
 import React from 'react';
-import {render} from 'react-dom';
+import { render } from 'react-dom';
 
 import BrowserRouter from 'react-router-dom/BrowserRouter';
-import { renderRoutes } from 'react-router-config';
 
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
+import Promise from 'promise-polyfill';
 
-import routes from '../core/router';
 import reducers from '../core/reducer';
+import Entry from './container/index';
 
 // style entry
 import './style/index.less';
 
-import Promise from 'promise-polyfill';
 if (!window.Promise) {
   window.Promise = Promise;
 }
@@ -31,10 +30,10 @@ const AppRouter = () => {
   return (
     <Provider store={store}>
       <BrowserRouter>
-        {renderRoutes(routes)}
+        <Entry />
       </BrowserRouter>
     </Provider>
-  )
+  );
 };
 
 render(<AppRouter />, document.querySelector('#root'));

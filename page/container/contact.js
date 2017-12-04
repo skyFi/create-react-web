@@ -1,23 +1,10 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
 
 class Contact extends React.Component {
   render() {
     return (
       <div className="container-contact">
-        contact!
-        <ul>
-          <li>菜单</li>
-          <li>
-            <NavLink to="/">home</NavLink>
-          </li>
-          <li>
-            <NavLink to="/contact">contact</NavLink>
-          </li>
-          <li>
-            <NavLink to="/about">about</NavLink>
-          </li>
-        </ul>
+        <h1>Contact: fyl_2525@163.com</h1>
       </div>
     );
   }

@@ -1,0 +1,167 @@
+/*
+多行省略
+
+IE 不支持 @supports 和 line-clamp 属性
+火狐 不支持 line-clamp 属性
+*/
+.clamp(@clamp: 1; @lineHeight: 21px) {
+
+  // IE 临时解决方案,直接放出来,若可以区分IE浏览器可加上
+  line-height: @lineHeight;
+  max-height: @lineHeight * @clamp;
+  height: auto;
+  overflow: hidden;
+  white-space: normal;
+
+  @supports not (-webkit-line-clamp: 3) {
+    & {
+      line-height: @lineHeight;
+      max-height: @lineHeight * @clamp;
+      height: auto;
+      overflow: hidden;
+      white-space: normal;
+    }
+  }
+
+  @supports (-webkit-line-clamp: 3) {  // 除却火狐和IE的其他流行浏览器
+    & {
+      word-break: break-all;
+      text-overflow: -o-ellipsis-lastline;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: @clamp;
+      -webkit-box-orient: vertical;
+      white-space: normal;
+    }
+  }
+}
+
+// 单行省略
+.online() {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// 设置 input placeholder 的颜色(用在input的父节点上)
+.inputPlaceholderColor(@color: @gray9) {
+  input::-webkit-input-placeholder {
+    color: @color;
+  }
+
+  input:-moz-placeholder {
+    color: @color;
+  }
+
+  input::-moz-placeholder {
+    color: @color;
+  }
+
+  input:-ms-input-placeholder {
+    color: @color;
+  }
+
+  textarea::-webkit-input-placeholder {
+    color: @color;
+  }
+
+  textarea:-moz-placeholder {
+    color: @color;
+  }
+
+  textarea::-moz-placeholder {
+    color: @color;
+  }
+
+  textarea:-ms-input-placeholder {
+    color: @color;
+  }
+}
+
+// 添加闪光特效
+// 无定位的时候
+.superflash(@position) {
+  & {
+    position: @position;
+    overflow: hidden;
+  }
+
+  &:after {
+    content: '';
+    position: absolute;
+    left: -100%;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    transform: skewx(-25deg);
+    background-image: -webkit-linear-gradient(0deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, .5), rgba(255, 255, 255, 0));
+    z-index: 10;
+  }
+
+  &:hover:after {
+    left: 100%;
+    transition: all .5s;
+  }
+}
+
+// 当前元素有定位的时候
+.superflash() {
+  & {
+    overflow: hidden;
+  }
+
+  &:after {
+    content: '';
+    position: absolute;
+    left: -100%;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    transform: skewx(-25deg);
+    background-image: -webkit-linear-gradient(0deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, .5), rgba(255, 255, 255, 0));
+    z-index: 10;
+  }
+
+  &:hover:after {
+    left: 100%;
+    transition: all .5s;
+  }
+}
+
+// 按钮
+.btn {
+  cursor: pointer;
+  user-select: none;
+}
+
+// 隐藏
+.hidden {
+  display: none;
+}
+
+// 浮动相关
+// 清除浮动
+.clearfix {
+  &:before,
+  &:after {
+    content: ' ';
+    display: table;
+    clear: both;
+  }
+}
+
+// 向左浮动
+.pull-left {
+  float: left;
+}
+
+// 向右浮动
+.pull-right {
+  float: right;
+}
+
+.yahei {
+  font-family: 'Microsoft Yahei', 'PingFang SC', sans-serif, Arial, Verdana;
+}

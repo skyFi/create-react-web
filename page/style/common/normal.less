@@ -1,0 +1,104 @@
+
+* {
+  box-sizing: border-box;
+  -webkit-overflow-scrolling: touch;
+  -webkit-text-size-adjust: 100%;
+  transition: color .15s, background-color .15s, border-color .15s;
+  font-size: 1.6rem;
+}
+
+html,
+body,
+#root {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  color: #333333;
+  font-family: 'PingFang SC', 'NotoSansCJKsc', 'DroidSans', 'Roboto', 'Helvetica Neue', 'Hiragino Sans GB', 'WenQuanYi Micro Hei', 'Microsoft Yahei', sans-serif, Arial, Verdana;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  background-color: #ffffff;
+}
+
+html {
+  font-size: 10px;
+}
+
+a {
+  text-decoration: none;
+  color: darken(#01AEF0, 2%);
+  cursor: pointer;
+
+  &:hover {
+    color: lighten(#01AEF0, 5%);
+  }
+}
+
+img {
+  background-size: cover;
+  background-position: center;
+  behavior: url('@{cdn}/backgroundsize.min.htc');
+  border: none;
+}
+
+input,
+select,
+textarea {
+  border: none;
+  outline: none;
+  appearance: none;
+  font-family: 'PingFang SC', 'NotoSansCJKsc', 'DroidSans', 'Roboto', 'Helvetica Neue', 'Hiragino Sans GB', 'WenQuanYi Micro Hei', 'Microsoft Yahei', sans-serif, Arial, Verdana;
+  color: #333;
+}
+
+/*清除默认选择框样式清除，隐藏下拉箭头*/
+select {
+  appearance:none;
+}
+
+/*清除ie的默认选择框样式清除，隐藏下拉箭头*/
+select::-ms-expand {
+  display: none;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  list-style-position: inside;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button{
+  -webkit-appearance: none !important;
+  margin: 0;
+}
+input[type="number"]{-moz-appearance:textfield;}
+
+.btn {
+  cursor: pointer;
+  user-select: none;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.pull-left {
+  float: left;
+}
+
+.pull-right {
+  float: right;
+}
+
+.clearfix {
+  &:before,
+  &:after {
+    content: ' ';
+    display: table;
+    clear: both;
+  }
+}

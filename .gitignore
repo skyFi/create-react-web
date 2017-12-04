@@ -62,6 +62,7 @@ typings/
 .idea/
 public/
 tmp/
+tmp/**
 *.iml
 config.js
 *-manifest.json

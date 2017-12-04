@@ -1,16 +1,21 @@
-import config from '../common/config';
-
-export default function (state = {}, action) {
-  if (action.err) {
-    state.err = action.err;
+export default function (state = {}, { err, type, _key, _value, ...rest }) {
+  if (err) {
+    state.err = err;
   }
-  if (action._key) {
+  if (_key) {
     return Object.assign({}, state, {
-      [action._key]: action._value
+      [_key]: _value
     });
   } else {
-    switch (action.type) {
-      // ... some other actions
+    switch (type) {
+
+      // server side rending init state.
+      case 'server_side/init_state':
+        return Object.assign({}, state, rest);
+
+      // some other actions
+      // ...
+
       default:
         return state;
     }

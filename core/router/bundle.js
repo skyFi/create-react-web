@@ -9,12 +9,12 @@ class Bundle extends React.Component {
   }
 
   componentWillMount() {
-    this.load(this.props)
+    this.load(this.props);
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.load !== this.props.load) {
-      this.load(nextProps)
+      this.load(nextProps);
     }
   }
 
@@ -31,7 +31,6 @@ class Bundle extends React.Component {
   }
 
   render() {
-    console.log('bundle');
     return this.state.mod ? this.props.children(this.state.mod) : null;
   }
 }
