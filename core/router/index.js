@@ -1,20 +1,7 @@
 /* eslint import/no-dynamic-require:0 */
 import React from 'react';
 import Bundle from './bundle';
-
-// require newest file
-const reload = (requiredModulePath) => {
-  const resolved = require.resolve(requiredModulePath);
-  const cache = require.cache[resolved];
-  delete require.cache[resolved];
-  try {
-    return require(requiredModulePath);
-  } catch (err) {
-    console.error('Error occurred while reloading module, rollback to cached one.\n =>', err.stack || err);
-    require.cache[resolved] = cache || (() => {});
-    return require(requiredModulePath);
-  }
-};
+import { reload } from '../lib/funcs';
 
 // require ensure hook used for server
 if (typeof require.ensure !== 'function') {

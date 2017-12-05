@@ -1,7 +1,6 @@
 'use strict';
 
 const gulp = require('gulp');
-const log = require('rainbowlog');
 const fs = require('fs');
 const path = require('path');
 const webpack = require('webpack');

@@ -13,15 +13,17 @@ import routes from '../../core/router';
 import reducers from '../../core/reducer';
 import states from '../../core/state';
 import Entry from '../../page/container/index';
+import { reload } from '../../core/lib/funcs';
+const version = global['config_version'] = require('../../version.json').version;
 
 // 监听文件变换
 let _routes = routes;
 let _reducers = reducers;
 let _states = states;
 process.on('webpack-rebundled', () => {
-  _routes = require('../../core/router');
-  _reducers = require('../../core/reducer');
-  _states = require('../../core/state');
+  _routes = reload('../../core/router');
+  _reducers = reload('../../core/reducer');
+  _states = reload('../../core/state');
 
   log.debug('webpack-rebundled');
 });
@@ -33,7 +35,6 @@ const timeout = (time) => new Promise((resolve, reject) => {
 
 module.exports = function(req, res) {
   (async () => {
-    const version = global['config_version'] = require('../../version.json').version;
     // init state
     const initState = Object.assign({}, _states, {/* put init state here before fetch data */});
     let context = {};
@@ -67,7 +68,7 @@ module.exports = function(req, res) {
       //todo: other component type ... write here. if you need.
 
       // do fetch data
-      return fetchData instanceof Function ? fetchData(store.dispatch, match, store) : Promise.resolve(null)
+      return fetchData instanceof Function ? fetchData(store.dispatch, match, req) : Promise.resolve(null)
     });
 
     // set timeout to fetch data

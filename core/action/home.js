@@ -1,16 +1,32 @@
 // reducer
-export const fetchUsers = (match) => (dispatch) => {
-  dispatch({
-    type: 'whatever_you_want',
-    _key: 'homeData',
-    _value: {
-      username: 'skylor min',
-      favoriteList: [
-        'Apple',
-        'DotA2',
-        'JavaScript',
-        'You'
-      ]
-    }
+export const fetchUser = () => async (dispatch, getState) => {
+  await new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(dispatch({
+        type: 'fetch/user',
+        _key: 'user',
+        _value: {
+          id: 1,
+          username: 'skylor min',
+        }
+      }));
+    }, 500);
+  });
+};
+
+export const fetchFavorites = () => async (dispatch, getState) => {
+  await new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(dispatch({
+        type: 'fetch/favorites',
+        _key: 'favorites',
+        _value: [
+          'Apple',
+          'DotA2',
+          'JavaScript',
+          'You'
+        ]
+      }));
+    }, 500);
   });
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 import connect from 'react-router4-redux';
-import { fetchUsers } from '../../core/action/home';
+import { fetchUser, fetchFavorites } from '../../core/action/home';
 
 class Home extends React.Component {
 
@@ -10,20 +10,21 @@ class Home extends React.Component {
   }
 
   // fetch data in server or browser did mount
-  fetchData(dispatch, match, store) {
-    // params `store` only in server rending.
-    dispatch(fetchUsers(match));
+  async fetchData(dispatch, match, server) {
+    // params `server` only in server rending. server = req;
+    await dispatch(fetchUser());
+    await dispatch(fetchFavorites());
   }
 
   render() {
-    const { homeData = {} } = this.props;
+    const { user = {}, favorites = [] } = this.props;
     return (
       <div className="container-home">
-        <h1>Home</h1>
-        <h2>{`hi, ${homeData.username}, your favorite list:`}</h2>
+        <h1>Home !</h1>
+        <h2>{`hi, ${user.username}, your favorite list:`}</h2>
         <ul className="favorite-list-box">
           {
-            (homeData.favoriteList || []).map(d => <li key={d}>{d}</li>)
+            (favorites || []).map(d => <li key={d}>{d}</li>)
           }
         </ul>
       </div>
@@ -33,6 +34,7 @@ class Home extends React.Component {
 
 export default connect(
   state => ({
-    homeData: state.homeData
+    user: state.user,
+    favorites: state.favorites,
   })
 )(Home);
