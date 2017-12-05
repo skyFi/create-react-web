@@ -1,6 +1,7 @@
 import React from 'react';
 import connect from 'react-router4-redux';
 import { fetchUser, fetchFavorites } from '../../core/action/home';
+import Tipbulb from '../icon/tip-bulb';
 
 class Home extends React.Component {
 
@@ -20,7 +21,7 @@ class Home extends React.Component {
     const { user = {}, favorites = [] } = this.props;
     return (
       <div className="container-home">
-        <h1>Home !</h1>
+        <h1><Tipbulb /> Home !</h1>
         <h2>{`hi, ${user.username}, your favorite list:`}</h2>
         <ul className="favorite-list-box">
           {

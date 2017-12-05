@@ -9,7 +9,7 @@ class Index extends React.Component {
 
   render() {
     return (
-      <div className="container-home">
+      <div className="container-index">
         <Menu />
 
         <Switch>

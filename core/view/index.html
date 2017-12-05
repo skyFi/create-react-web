@@ -11,6 +11,7 @@
   <% } %>
 
   <link rel="stylesheet" type="text/css" href="<%= cdn %>/page.<%= version %>.css<%= bundlePostfix %>">
+
 </head>
 <body>
 <div id="root"><%- html %></div>
@@ -21,6 +22,8 @@
 <script defer type="text/javascript" src="<%= cdn %>/vendors.<%= version %>.js"></script>
 <script defer type="text/javascript" src="<%= cdn %>/config.<%= version %>.js"></script>
 <script defer type="text/javascript" src="<%= cdn %>/page.<%= version %>.js<%= bundlePostfix %>"></script>
+
+<script defer async type="text/javascript" src="<%= cdn %>/sdk.js"></script>
 
 </body>
 </html>

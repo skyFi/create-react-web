@@ -67,3 +67,4 @@ tmp/**
 config.js
 *-manifest.json
 version.json
+page/icon/

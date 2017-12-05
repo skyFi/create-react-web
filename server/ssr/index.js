@@ -12,7 +12,6 @@ import config from '../../core/common/config';
 import routes from '../../core/router';
 import reducers from '../../core/reducer';
 import states from '../../core/state';
-import Entry from '../../page/container/index';
 import { reload } from '../../core/lib/funcs';
 const version = global['config_version'] = require('../../version.json').version;
 
@@ -20,10 +19,12 @@ const version = global['config_version'] = require('../../version.json').version
 let _routes = routes;
 let _reducers = reducers;
 let _states = states;
+let Entry = reload('../../page/container/index').default;
 process.on('webpack-rebundled', () => {
   _routes = reload('../../core/router');
   _reducers = reload('../../core/reducer');
   _states = reload('../../core/state');
+  Entry = reload('../../page/container/index').default;
 
   log.debug('webpack-rebundled');
 });

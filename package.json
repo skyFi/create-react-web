@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "analyse": "gulp clean && gulp analyse",
-    "dev": "gulp clean && gulp dev"
+    "dev": "gulp clean && gulp dev",
+    "rebuild-icon": "gulp rebuild-icon"
   },
   "repository": "git+https://github.com/skyFi/create-react-web.git",
   "keywords": [
@@ -43,13 +44,21 @@
     "ejs": "^2.5.7",
     "express": "^4.16.2",
     "extract-text-webpack-plugin": "^3.0.2",
+    "file-loader": "^1.1.5",
     "gulp": "^3.9.1",
+    "gulp-babel": "^7.0.0",
+    "gulp-changed": "^3.1.1",
+    "gulp-file": "^0.3.0",
+    "gulp-rename": "^1.2.2",
     "gulp-sequence": "^0.4.6",
+    "gulp-uglify": "^3.0.0",
     "happypack": "^4.0.0",
     "isomorphic-fetch": "^2.2.1",
+    "json-loader": "^0.5.7",
     "less": "^2.7.3",
     "less-loader": "^4.0.5",
     "lodash": "^4.17.4",
+    "merge-stream": "^1.0.1",
     "postcss-loader": "^2.0.8",
     "promise-polyfill": "^6.0.2",
     "querystring": "^0.2.0",
@@ -66,7 +75,11 @@
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
     "style-loader": "^0.19.0",
+    "svg-loader": "^0.0.2",
+    "through-gulp": "^0.5.0",
+    "url-loader": "^0.6.2",
     "webpack": "^3.8.1",
-    "webpack-bundle-analyzer": "^2.9.1"
+    "webpack-bundle-analyzer": "^2.9.1",
+    "yaml-loader": "^0.5.0"
   }
 }

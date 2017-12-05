@@ -9,8 +9,15 @@ const del = require('del');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HappyPack = require('happypack');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const merge = require('merge-stream');
 const gulpSequence = require('gulp-sequence');
+const changed = require('gulp-changed');
+const uglify = require('gulp-uglify');
+const babel = require('gulp-babel');
+const file = require('gulp-file');
+const rename = require('gulp-rename');
 const config = require('./core/common/config');
+const iconPlugin = require('./icon-plugin');
 
 // 开发
 let isDev = false;
@@ -22,6 +29,46 @@ let bundleAnalyzer = false;
 
 gulp.task('clean', () => {
   return del('public/**/*');
+});
+
+// 复制文件
+gulp.task('copy', () => {
+  return merge(
+    // 复制图片
+    gulp.src('core/asset/img/**/*')
+      .pipe(changed('public/images'))
+      .pipe(gulp.dest('public/images')),
+
+    // 复制图标
+    gulp.src('core/asset/img/favicon.ico')
+      .pipe(changed('public'))
+      .pipe(gulp.dest('public')),
+
+    // 复制第三方包
+    gulp.src('core/vendor/**/*')
+      .pipe(changed('public'))
+      .pipe(gulp.dest('public')),
+
+    // 压缩单个JS文件
+    gulp.src('core/vendors/sdk.js')
+      .pipe(babel())
+      .pipe(uglify())
+      .pipe(changed('public'))
+      .pipe(gulp.dest('public')),
+
+    // 写入less配置
+    gulp.src('core/page/style/common/config.less')
+      .pipe(file('config.less', `@cdn: '${config.cdn}';`))
+      .pipe(gulp.dest('core/page/style/common')),
+
+    // 生成SVG
+    gulp.src('core/asset/svg/*.svg')
+      .pipe(iconPlugin())
+      .pipe(rename((path) => {
+        path.extname = '.js';
+      }))
+      .pipe(gulp.dest('page/icon'))
+  );
 });
 
 // 生成新版本号
@@ -217,6 +264,9 @@ gulp.task('webpack-page', (callback) => {
       }, {
         test: /\.yml$/,
         use: ['json-loader', 'yaml-loader']
+      }, {
+        test: /\.svg/,
+        use: ['svg-loader']
       }],
     },
     plugins: [
@@ -287,11 +337,12 @@ gulp.task('watch', () => {
   isDev = true;
 
   // 监听
-  // gulp.watch([
-  //   'core/asset/**/*',
-  // ], [
-  //   'copy',
-  // ]);
+  gulp.watch([
+    'core/asset/img/**/*',
+    'core/asset/svg/**/*',
+  ], [
+    'copy',
+  ]);
 });
 
 gulp.task('analyse-option', () => {
@@ -306,6 +357,7 @@ gulp.task('server', () => {
 });
 
 // 分析打包文件
+gulp.task('rebuild-icon', ['clean', 'copy']);
 gulp.task('analyse', ['analyse-option', 'revision', 'webpack-config', 'webpack-dll', 'webpack-page']);
 gulp.task('dev', gulpSequence('watch', 'revision', 'webpack-config', 'webpack-dll', 'webpack-page', 'server'));
 

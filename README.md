@@ -10,13 +10,14 @@ For web site developer who wants to use React.
 
 ## Todolist
 
-- [x] yarn is faster
+- [x] async await
 - [x] React 16.x & React-Router 4.x
 - [x] Server Side Render (SSR)
 - [x] Code Splitting (use React-Router 4.X)
 - [x] mixin
 - [x] fetch data (ajax)
 - [ ] smart title,keywords,description (TDK) for SEO
+- [ ] auto asset manager
 - [ ] mock data
 - [x] gulp tasks
 - [x] use less for css

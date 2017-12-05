@@ -1,0 +1,17 @@
+User-agent: googlebot-image
+Disallow: /
+User-agent: googlebot-mobile
+Disallow: /
+User-agent: yahoo-mmcrawler
+Disallow: /
+User-agent: yahoo-blogs/v3.9
+Disallow: /
+User-agent: psbot
+Disallow: /
+User-agent: *
+Disallow:
+Crawl-delay: 60
+Disallow: /bin/
+Disallow: /images/
+Disallow: /static/
+Sitemap: http://xxx.com/sitemap.xml
