@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from 'react-dom';
+import { hydrate } from 'react-dom';
 
 import BrowserRouter from 'react-router-dom/BrowserRouter';
 
@@ -36,4 +36,4 @@ const AppRouter = () => {
   );
 };
 
-render(<AppRouter />, document.querySelector('#root'));
+hydrate(<AppRouter />, document.querySelector('#root'));

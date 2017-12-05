@@ -82,7 +82,7 @@ module.exports = function(req, res) {
 
     // set some other init state after fetch data.
     const initStateAfterFetchData = {};
-    initStateAfterFetchData.ssr = true;
+    initStateAfterFetchData['Skylor min'] = true;
     //todo: put you init state code here, if you need.
 
     // dispatch state after fetch data, all
