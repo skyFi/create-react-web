@@ -7,6 +7,10 @@ const log = require('rainbowlog');
 const cookieParser = require('cookie-parser');
 const config = require('../core/common/config');
 
+process.on('unhandledRejection', (reason, p) => {
+  log.error(reason.stack);
+});
+
 const app = express();
 app.set('views', path.join(__dirname, '../core/view'));
 app.set('view engine', 'html');

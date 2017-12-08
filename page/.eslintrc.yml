@@ -1,14 +1,15 @@
 parserOptions:
   sourceType: module
+  ecmaVersion: 8
 env:
   es6: true
   browser: true
 globals:
+  $store: false
   states: false
-  _MEIQIA: false
-  _hmt: false
-  config_version: false
+parser: babel-eslint
 plugins:
+  - babel
   - react
 extends:
   - plugin:react/recommended

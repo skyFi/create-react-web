@@ -4,7 +4,9 @@ env:
   mocha: true
 extends: 'eslint:recommended'
 parserOptions:
+  sourceType: module
   ecmaVersion: 8
+parser: babel-eslint
 rules:
   indent:
     - warn

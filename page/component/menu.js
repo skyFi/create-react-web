@@ -1,6 +1,5 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import connect from 'react-router4-redux';
 
 class Menu extends React.Component {
 
@@ -37,4 +36,4 @@ class Menu extends React.Component {
   }
 }
 
-export default connect()(Menu);
+export default Menu;

@@ -50,7 +50,7 @@ gulp.task('copy', () => {
       .pipe(gulp.dest('public')),
 
     // 压缩单个JS文件
-    gulp.src('core/vendors/sdk.js')
+    gulp.src('core/vendor/**/*.js')
       .pipe(babel())
       .pipe(uglify())
       .pipe(changed('public'))
@@ -62,7 +62,7 @@ gulp.task('copy', () => {
       .pipe(gulp.dest('core/page/style/common')),
 
     // 生成SVG
-    gulp.src('core/asset/svg/*.svg')
+    gulp.src('core/asset/svg/**/*.svg')
       .pipe(iconPlugin())
       .pipe(rename((path) => {
         path.extname = '.js';
@@ -359,7 +359,7 @@ gulp.task('server', () => {
 // 分析打包文件
 gulp.task('rebuild-icon', ['clean', 'copy']);
 gulp.task('analyse', ['analyse-option', 'revision', 'webpack-config', 'webpack-dll', 'webpack-page']);
-gulp.task('dev', gulpSequence('watch', 'revision', 'webpack-config', 'webpack-dll', 'webpack-page', 'server'));
+gulp.task('dev', gulpSequence('watch', 'copy', 'revision', 'webpack-config', 'webpack-dll', 'webpack-page', 'server'));
 
 // bundle分析器配置
 function BundleAnalyzerOptions(port) {

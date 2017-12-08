@@ -1,7 +1,12 @@
+## page container
+
+### Example
+
+```JavaScription
 import React from 'react';
 import { fetchData } from 'react-web-helper';
 
-@fetchData()
+@fetchData() // must has it.
 class Contact extends React.Component {
 
   render() {
@@ -14,3 +19,5 @@ class Contact extends React.Component {
 }
 
 export default Contact;
+
+```

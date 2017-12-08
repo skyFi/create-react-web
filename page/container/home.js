@@ -1,17 +1,20 @@
 import React from 'react';
-import connect from 'react-router4-redux';
+import { fetchData, reduxConnect, withRouter } from 'react-web-helper';
 import { fetchUser, fetchFavorites } from '../../core/action/home';
 import Tipbulb from '../icon/tip-bulb';
 
+@withRouter()
+@fetchData()
+@reduxConnect(
+  state => ({
+    user: state.user,
+    favorites: state.favorites,
+  })
+)
 class Home extends React.Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
   // fetch data in server or browser did mount
-  async fetchData(dispatch, match, server) {
+  static async fetchData({ dispatch, match, req }) {
     // params `server` only in server rending. server = req;
     await dispatch(fetchUser());
     await dispatch(fetchFavorites());
@@ -33,9 +36,4 @@ class Home extends React.Component {
   }
 }
 
-export default connect(
-  state => ({
-    user: state.user,
-    favorites: state.favorites,
-  })
-)(Home);
+export default Home;

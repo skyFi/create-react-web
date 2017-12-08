@@ -1,5 +1,6 @@
 /* eslint import/no-dynamic-require:0 */
 import React from 'react';
+import get from 'lodash/get';
 import Bundle from './bundle';
 import { reload } from '../lib/funcs';
 
@@ -17,7 +18,11 @@ const routes = [
   {
     path: '/',
     exact: true,
-    title: 'home',
+    title: (states) => {
+      return `${get(states, 'user.username') || ''}'s Home`;
+    },
+    keywords: 'Skylor min, React, Redux ...',
+    description: 'This is my home.',
     component: props => (
       <Bundle load={cb => require.ensure([], require => cb(require('../../page/container/home')), 'home')}>
         { Home => <Home {...props} /> }
@@ -26,14 +31,13 @@ const routes = [
   {
     path: '/about',
     exact: true,
-    title: 'about',
     component: props => (
       <Bundle load={cb => require.ensure([], require => cb(require('../../page/container/about')), 'about')}>
         { Home => <Home {...props} /> }
       </Bundle>)
   },
   {
-    path: '/contact',
+    path: '/contact/:id?',
     exact: true,
     title: 'contact',
     component: props => (

@@ -2,14 +2,15 @@
 export const fetchUser = () => async (dispatch, getState) => {
   await new Promise((resolve) => {
     setTimeout(() => {
-      resolve(dispatch({
+      dispatch({
         type: 'fetch/user',
         _key: 'user',
         _value: {
           id: 1,
           username: 'skylor min',
         }
-      }));
+      });
+      resolve();
     }, 500);
   });
 };

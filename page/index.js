@@ -18,13 +18,14 @@ if (!window.Promise) {
   window.Promise = Promise;
 }
 
-if (!window.global) {
-  window.global = window;
-}
-
 const store = createStore(
   reducers, window.__INITIAL_STATE__, applyMiddleware(thunk)
 );
+
+if (!window.global) {
+  window.$store = store; // global `store` for easy use.
+  window.global = window;
+}
 
 const AppRouter = () => {
   return (

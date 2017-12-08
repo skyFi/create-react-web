@@ -1,4 +1,4 @@
-'use strict';
+
 
 import log from 'rainbowlog';
 import React from 'react';
@@ -34,6 +34,33 @@ const timeout = (time) => new Promise((resolve, reject) => {
   setTimeout(() => reject(new Error('Timed out.')), time);
 });
 
+// 获取fetchData方法
+const getFetchDataFunc = (Component) => {
+  if (!Component) {
+    return null;
+  }
+
+  if (Component.fetchData instanceof Function) {
+    return Component.fetchData;
+  }
+
+  if (Component.WrappedComponent instanceof Function) {
+    return new Component.WrappedComponent().fetchData;
+  }
+
+  if (Component.WrappedComponent) {
+    return getFetchDataFunc(Component.WrappedComponent);
+  }
+
+  if (Component instanceof Function) {
+    console.log(Component);
+    console.log(new Component());
+    return new Component().fetchData;
+  }
+
+  return null;
+};
+
 module.exports = function(req, res) {
   (async () => {
     // init state
@@ -42,42 +69,60 @@ module.exports = function(req, res) {
     // create store
     const store = createStore(_reducers.default || _reducers, initState, applyMiddleware(thunk));
     // match routes, get pages
-    const pages = matchRoutes(_routes.default || _routes, req.url);
+    const pages = matchRoutes(_routes.default || _routes, req.path);
+    let title;
+    let keywords;
+    let description;
     // ssr fetch data
     const promises = pages.map(({ route, match }) => {
       let _component = undefined;
       let fetchData = undefined;
-
       // when component is a function.
       if (route.component instanceof Function) {
         if (route.component.WrappedComponent instanceof Function) {
-          fetchData = new route.component.WrappedComponent().fetchData;
+          _component = new route.component.WrappedComponent();
         } else {
           route.component().props.load((component) => {
             _component = component.default || component;
           });
-
-          if (_component) {
-            if (typeof _component.WrappedComponent === 'function') {
-              fetchData = new _component.WrappedComponent().fetchData;
-            } else {
-              fetchData = new _component().fetchData;
-            }
-          }
         }
+
+        fetchData = getFetchDataFunc(_component);
       }
-      //todo: other component type ... write here. if you need.
+
+      // handle TDK for SEO
+      if (match.url === req.path) {
+        title = route.title || '';
+        keywords = route.keywords || '';
+        description = route.description || '';
+      }
 
       // do fetch data
-      return fetchData instanceof Function ? fetchData(store.dispatch, match, req) : Promise.resolve(null)
+      return fetchData instanceof Function ? fetchData({
+        dispatch: store.dispatch, match, req
+      }) : Promise.resolve(null);
     });
 
+    console.log({ pages, firstRoute: (pages[0] || {}).route });
+    console.log('pages.length: ', promises.length);
     // set timeout to fetch data
     try {
       await Promise.race([
         Promise.all(promises),
         timeout(config.apiTimeout || 10000)
       ]);
+      const states = store.getState();
+      if (title instanceof Function) {
+        title = title(states);
+      }
+      if (keywords instanceof Function) {
+        keywords = keywords(states);
+      }
+      if (description instanceof Function) {
+        description = description(states);
+      }
+      process.env.NODE_ENV === 'development' && log.debug({url: req.url, title, keywords, description});
+
     } catch (error) {
       log.error(error);
     }
@@ -85,7 +130,7 @@ module.exports = function(req, res) {
     // set some other init state after fetch data.
     const initStateAfterFetchData = {};
     initStateAfterFetchData['Skylor min'] = true;
-    //todo: put you init state code here, if you need.
+    // todo: put you init state code here, if you need.
 
     // dispatch state after fetch data, all
     store.dispatch({
@@ -110,12 +155,15 @@ module.exports = function(req, res) {
     // return data for ejs template.
     return {
       html,
+      title,
+      keywords,
+      description,
       version,
       __INITIAL_STATE__: stateString,
       cdn: config.cdn,
       dns: config.dns,
       bundlePostfix: process.env.NODE_ENV === 'development' ? `?timestamp=${Date.now()}` : '',
-    }
+    };
   })().then((data) => {
     if (data.notFound) {
       data.number = req.path === '/error/ie.html' ? 403 : 404;
