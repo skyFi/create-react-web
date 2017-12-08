@@ -2,7 +2,7 @@
 
 For web site developer who wants to use React.
 
-> 欢迎 fork， 提交 PR  --_Skylor.min_
+> 欢迎 fork， 提交 PR  --[_Skylor.min_](http://www.fangyongle.com)
 
 ## Run Env.
 
