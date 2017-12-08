@@ -6,9 +6,7 @@ For web site developer who wants to use React.
 
 ## Run Env.
 
-| type            | version         |   note  |
-| :-------------: | :-------------: | :-----: |
-| node            | \>= 8.x         |         |
+> to be continue
 
 ## Todolist
 
