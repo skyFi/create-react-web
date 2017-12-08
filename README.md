@@ -2,6 +2,8 @@
 
 For web site developer who wants to use React.
 
+> 欢迎 fork， 提交 PR  --_Skylor.min_
+
 ## Run Env.
 
 | type            | version         |   note  |
