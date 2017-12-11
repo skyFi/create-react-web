@@ -18,11 +18,6 @@ const routes = [
   {
     path: '/',
     exact: true,
-    title: (states) => {
-      return `${get(states, 'user.username') || ''}'s Home`;
-    },
-    keywords: 'Skylor min, React, Redux ...',
-    description: 'This is my home.',
     component: props => (
       <Bundle load={cb => require.ensure([], require => cb(require('../../page/container/home')), 'home')}>
         { Home => <Home {...props} /> }
@@ -39,7 +34,6 @@ const routes = [
   {
     path: '/contact/:id?',
     exact: true,
-    title: 'contact',
     component: props => (
       <Bundle load={cb => require.ensure([], require => cb(require('../../page/container/contact')), 'contact')}>
         { Home => <Home {...props} /> }

@@ -22,10 +22,7 @@ class Index extends React.Component {
     // subscribe state change
     this.unsubscribe = $store.subscribe(() => {
       // update title, keywords, description
-      this.updateTDK();
-
-      // do something when redux state changed.
-      // ...
+      this.updateData();
     });
   }
 
@@ -37,7 +34,7 @@ class Index extends React.Component {
       window.scrollTo(0, 0); // scroll to top when router changed.
 
       // do something when router changed.
-      this.updateTDK();
+      this.updateData();
     }
   }
 
@@ -46,30 +43,8 @@ class Index extends React.Component {
     this.unsubscribe instanceof Function && this.unsubscribe();
   }
 
-  // smart update title, keywords, description
-  updateTDK() {
-    const matchRoutes = routes.filter(route => matchPath(this.props.location.pathname, route));
-    if (matchRoutes && matchRoutes.length > 0) {
-      const matchRoute = matchRoutes[0];
-      // update title
-      if (matchRoute.title instanceof Function) {
-        document.title = matchRoute.title($store.getState());
-      } else {
-        document.title = matchRoute.title || config.appName || location.hostname;
-      }
-      // update keywords
-      if (matchRoute.keywords instanceof Function) {
-        document.querySelector('meta[name=keywords]').content = matchRoute.keywords($store.getState());
-      } else {
-        document.querySelector('meta[name=keywords]').content = matchRoute.keywords || config.defaultKeywords || location.hostname;
-      }
-      // update description
-      if (matchRoute.description instanceof Function) {
-        document.querySelector('meta[name=description]').content = matchRoute.description($store.getState());
-      } else {
-        document.querySelector('meta[name=description]').content = matchRoute.description || config.defaultDescription || location.hostname;
-      }
-    }
+  updateData() {
+    // do something when page update.
   }
 
   render() {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { fetchData, reduxConnect, withRouter } from 'react-web-helper';
+import { fetchData, reduxConnect, withRouter, Helmet } from 'react-web-helper';
 import { fetchUser, fetchFavorites } from '../../core/action/home';
 import Tipbulb from '../icon/tip-bulb';
 
@@ -24,6 +24,11 @@ class Home extends React.Component {
     const { user = {}, favorites = [] } = this.props;
     return (
       <div className="container-home">
+        <Helmet>
+          <title>{user.username} home!</title>
+          <meta name="keywords" content={`${user.username}， ${favorites.join('，')}`} />
+          <meta name="description" content="description from page component." />
+        </Helmet>
         <h1><Tipbulb /> Home !</h1>
         <h2>{`hi, ${user.username}, your favorite list:`}</h2>
         <ul className="favorite-list-box">

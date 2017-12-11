@@ -8,6 +8,7 @@ import { matchRoutes } from 'react-router-config';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
+import { Helmet } from 'react-helmet';
 import config from '../../core/common/config';
 import routes from '../../core/router';
 import reducers from '../../core/reducer';
@@ -53,8 +54,6 @@ const getFetchDataFunc = (Component) => {
   }
 
   if (Component instanceof Function) {
-    console.log(Component);
-    console.log(new Component());
     return new Component().fetchData;
   }
 
@@ -70,9 +69,6 @@ module.exports = function(req, res) {
     const store = createStore(_reducers.default || _reducers, initState, applyMiddleware(thunk));
     // match routes, get pages
     const pages = matchRoutes(_routes.default || _routes, req.path);
-    let title;
-    let keywords;
-    let description;
     // ssr fetch data
     const promises = pages.map(({ route, match }) => {
       let _component = undefined;
@@ -90,39 +86,18 @@ module.exports = function(req, res) {
         fetchData = getFetchDataFunc(_component);
       }
 
-      // handle TDK for SEO
-      if (match.url === req.path) {
-        title = route.title || '';
-        keywords = route.keywords || '';
-        description = route.description || '';
-      }
-
       // do fetch data
       return fetchData instanceof Function ? fetchData({
         dispatch: store.dispatch, match, req
       }) : Promise.resolve(null);
     });
 
-    console.log({ pages, firstRoute: (pages[0] || {}).route });
-    console.log('pages.length: ', promises.length);
     // set timeout to fetch data
     try {
       await Promise.race([
         Promise.all(promises),
         timeout(config.apiTimeout || 10000)
       ]);
-      const states = store.getState();
-      if (title instanceof Function) {
-        title = title(states);
-      }
-      if (keywords instanceof Function) {
-        keywords = keywords(states);
-      }
-      if (description instanceof Function) {
-        description = description(states);
-      }
-      process.env.NODE_ENV === 'development' && log.debug({url: req.url, title, keywords, description});
-
     } catch (error) {
       log.error(error);
     }
@@ -146,6 +121,8 @@ module.exports = function(req, res) {
         </StaticRouter>
       </Provider>
     );
+    // smart header
+    const helmet = Helmet.renderStatic();
 
     // handle the special characters that javascript can't parse.
     let stateString = JSON.stringify(store.getState());
@@ -155,9 +132,7 @@ module.exports = function(req, res) {
     // return data for ejs template.
     return {
       html,
-      title,
-      keywords,
-      description,
+      helmet,
       version,
       __INITIAL_STATE__: stateString,
       cdn: config.cdn,
