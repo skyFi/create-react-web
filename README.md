@@ -72,4 +72,34 @@ For web site developer who wants to use React.
 
 ## Changelog
 
+### Install
+
+```bash
+npm run changelog:install
+```
+
+### First time
+
+```bash
+npm run changelog:first
+```
+
+### Usage
+
+```bash
+// commit every change.
+npm run commit
+
+// generate changelog
+npm run changelog
+```
+
+Create a `.czrc` file in your `home` directory, with path referring to the preferred, globally installed, `commitizen` adapter
+```bash
+echo '{ "path": "cz-conventional-changelog" }' > ~/.czrc
+```
+You are all set! Now cdinto any `git` repository and use `git cz` instead of `git commit` and you will find the `commitizen` prompt.
+
+> Protip: You can use all the `git commit` options with `git cz`, for example: `git cz -a`.
+
 [CHANGELOG](/CHANGELOG.md)
