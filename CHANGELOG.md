@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.2.0"></a>
+# [0.2.0](https://github.com/skyFi/create-react-web/compare/v0.0.8...v0.2.0) (2017-12-12)
+
+
+### Features
+
+* update run script ([bc56aa2](https://github.com/skyFi/create-react-web/commit/bc56aa2))
+
+
+
 <a name="0.0.8"></a>
 ## [0.0.8](https://github.com/skyFi/create-react-web/compare/v0.0.7...v0.0.8) (2017-12-12)
 
