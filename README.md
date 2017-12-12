@@ -69,3 +69,7 @@ For web site developer who wants to use React.
 ├─┬ eslint-plugin-jsx-a11y@3.0.2
 ├─┬ eslint-plugin-react@6.10.3
 ```
+
+## Changelog
+
+[CHANGELOG](/CHANGELOG.md)
