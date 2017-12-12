@@ -1,5 +1,3 @@
-'use strict';
-
 const path = require('path');
 const express = require('express');
 const ejs = require('ejs');
@@ -7,9 +5,8 @@ const log = require('rainbowlog');
 const cookieParser = require('cookie-parser');
 const config = require('../core/common/config');
 
-process.on('unhandledRejection', (reason, p) => {
-  log.error(reason.stack);
-});
+process.on('unhandledRejection', catchErrorLog);
+process.on('uncaughtException', catchErrorLog);
 
 const app = express();
 app.set('views', path.join(__dirname, '../core/view'));
@@ -30,3 +27,8 @@ app.listen(config.port, (err) => {
   log.info(`Server is up in ${process.uptime()}s, at port: ${config.port}`);
 });
 app.all('*', require('./ssr'));
+
+// 错误处理
+function catchErrorLog(reason, p) {
+  log.error(reason.stack);
+}
