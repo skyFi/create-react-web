@@ -7,8 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "changelog:install": "cnpm install -g standard-changelog; cnpm install -g commitizen; cnpm install -g cz-conventional-changelog;",
     "changelog:first": "standard-changelog --first-release;",
-    "changelog": "standard-changelog",
     "commit": "git add . && git cz",
+    "release": "standard-changelog -a",
     "analyse": "gulp clean && gulp analyse",
     "dev": "gulp clean && gulp dev",
     "rebuild-icon": "gulp rebuild-icon"
