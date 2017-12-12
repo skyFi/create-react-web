@@ -1,4 +1,4 @@
-'use strict';
+/* eslint no-console: 0, radix: 0, guard-for-in: 0, import/no-mutable-exports: 0 */
 
 const gulp = require('gulp');
 const fs = require('fs');
@@ -16,7 +16,7 @@ const uglify = require('gulp-uglify');
 const babel = require('gulp-babel');
 const file = require('gulp-file');
 const rename = require('gulp-rename');
-const config = require('./core/common/config');
+const config = require('./src/core/common/config');
 const iconPlugin = require('./icon-plugin');
 
 // 开发
@@ -35,39 +35,39 @@ gulp.task('clean', () => {
 gulp.task('copy', () => {
   return merge(
     // 复制图片
-    gulp.src('core/asset/img/**/*')
+    gulp.src('src/core/asset/img/**/*')
       .pipe(changed('public/images'))
       .pipe(gulp.dest('public/images')),
 
     // 复制图标
-    gulp.src('core/asset/img/favicon.ico')
+    gulp.src('src/core/asset/img/favicon.ico')
       .pipe(changed('public'))
       .pipe(gulp.dest('public')),
 
     // 复制第三方包
-    gulp.src('core/vendor/**/*')
+    gulp.src('src/core/vendor/**/*')
       .pipe(changed('public'))
       .pipe(gulp.dest('public')),
 
     // 压缩单个JS文件
-    gulp.src('core/vendor/**/*.js')
+    gulp.src('src/core/vendor/**/*.js')
       .pipe(babel())
       .pipe(uglify())
       .pipe(changed('public'))
       .pipe(gulp.dest('public')),
 
     // 写入less配置
-    gulp.src('core/page/style/common/config.less')
+    gulp.src('src/core/page/style/common/config.less')
       .pipe(file('config.less', `@cdn: '${config.cdn}';`))
-      .pipe(gulp.dest('core/page/style/common')),
+      .pipe(gulp.dest('src/core/page/style/common')),
 
     // 生成SVG
-    gulp.src('core/asset/svg/**/*.svg')
+    gulp.src('src/core/asset/svg/**/*.svg')
       .pipe(iconPlugin())
       .pipe(rename((path) => {
         path.extname = '.js';
       }))
-      .pipe(gulp.dest('page/icon'))
+      .pipe(gulp.dest('src/core/page/icon'))
   );
 });
 
@@ -89,7 +89,7 @@ gulp.task('webpack-config', (callback) => {
     watch: isDev,
     entry: {
       vendors: [
-        './core/common/config.js',
+        './src/core/common/config.js',
       ],
     },
     output: {
@@ -204,12 +204,12 @@ gulp.task('webpack-dll', (callback) => {
 
 // 打包移动端文件
 gulp.task('webpack-page', (callback) => {
-  console.log({isDev})
+  console.log({isDev});
   webpack({
     watch: isDev,
     devtool: isDev ? 'source-map' : '',
     entry: [
-      './page/index.js',
+      './src/page/index.js',
     ],
     output: {
       path: path.join(__dirname, 'public'),

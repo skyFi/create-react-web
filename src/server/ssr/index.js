@@ -14,7 +14,7 @@ import routes from '../../core/router';
 import reducers from '../../core/reducer';
 import states from '../../core/state';
 import { reload } from '../../core/lib/funcs';
-const version = global['config_version'] = require('../../version.json').version;
+const version = global['config_version'] = require('../../../version.json').version;
 
 // 监听文件变换
 let _routes = routes;
