@@ -34,6 +34,15 @@ gulp.task('clean', () => {
 // 复制文件
 gulp.task('copy', () => {
   return merge(
+    // 复制配置文件
+    gulp.src('src/core/common/config-*.js')
+      .pipe(rename((path) => {
+        path.basename = path.basename.split(/-/ig).slice(1).join('-');
+        path.extname = '.js';
+      }))
+      .pipe(changed('config'))
+      .pipe(gulp.dest('config')),
+
     // 复制图片
     gulp.src('src/core/asset/img/**/*')
       .pipe(changed('public/images'))
