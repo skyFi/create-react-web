@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "changelog:install": "yarn add standard-changelog commitizen cz-conventional-changelog;",
-    "release:install": "yarn add standard-version",
+    "commit-release:install": "yarn add standard-version standard-changelog commitizen cz-conventional-changelog -d",
     "lint": "eslint --ignore-path .gitignore .",
     "lint:fix": "eslint --ignore-path .gitignore --fix .",
     "precommit": "lint-staged",

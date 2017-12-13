@@ -2,11 +2,9 @@
 
 For web site developer who wants to use React.
 
-> 欢迎 fork， 提交 PR  --[_Skylor.min_](http://www.fangyongle.com)
-
 ## Run Env.
 
-> to be continue
+> node version >= 8.x
 
 ## Todolist
 
@@ -16,7 +14,7 @@ For web site developer who wants to use React.
 - [x] smart title,keywords,description (TDK) for SEO
 - [x] auto asset manager
 - [x] auto svg icon
-- [ ] auto changelog
+- [x] auto changelog
 - [x] fetch data (ajax)
 - [x] ajax, connect, etc. HOC
 - [x] gulp tasks & webpack code
@@ -52,10 +50,7 @@ For web site developer who wants to use React.
 
 * (_developing_)
 
-## eslint 
-
-`npm list -g | grep eslint`
-
+## Eslint Version
 
 ```bash
 ├─┬ babel-eslint@8.0.3
@@ -70,36 +65,76 @@ For web site developer who wants to use React.
 ├─┬ eslint-plugin-react@6.10.3
 ```
 
-## Changelog
+## Changelog & Commit Message
 
 ### Install
 
 ```bash
-npm run changelog:install
-```
-
-### First time
-
-```bash
-npm run changelog:first
+npm run commit-release:install
 ```
 
 ### Usage
 
 ```bash
-// commit every change.
-npm run commit
+// 脚本辅助提交代码，书写提交信息，也可以使用自己喜欢的提交方式，但是需要注意提交文档的格式
+npm run git:commit
 
-// generate changelog
-npm run changelog
+// 预查看发布信息
+npm run release -- --dry-run
+
+// 确认无误后发布
+npm run release
+```
+### 提交信息的编写
+
+git提交信息需遵循Angular.js提出的规范（[AngularJS Git Commit Message Conventions](https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y/edit)）
+
+下面简单说明一下：
+
+提交信息应由如下部分组成：
+
+```
+<type>(<scope>): <subject>
+
+<body>
+
+<footer>
 ```
 
-Create a `.czrc` file in your `home` directory, with path referring to the preferred, globally installed, `commitizen` adapter
-```bash
-echo '{ "path": "cz-conventional-changelog" }' > ~/.czrc
+- `type` - *必填*，描述本次提交做了什么类型的变更，有如下几种类型：
+    - `feat` (feature): 提交新的功能
+    - `fix` (bug fix): 提交错误修复
+    - `docs` (documentation): 仅修改文档
+    - `style` (code style): 纠正代码风格
+    - `refactor`: 重构，既不是新功能或错误修复，也不是纠正代码风格
+    - `test`: 添加测试代码
+    - `chore` (maintain): 修改项目运作方式（构建流程、辅助开发工具等）
+- `scope` - *选填*，描述本次提交修改的地方（比如：service, funcs, models等）
+- `subject` - *必填*，简短描述本次的变更
+    - 应当使用现在时的祈使句，例如：“增加分组课程列表”，而不是“增加了分组课程列表接口”或“分组课程列表接口”
+    - 不需要首字母大写
+    - 不需要在最后加句号
+- `body` - *选填*，描述变更的动机、变更前后对比等。
+    - 前面必须有一个空行隔开
+    - 和`subject`一样，使用祈使句
+- `footer` - *选填*，一些额外信息，如“BREAKING CHANGE”、“Close #XXX”等信息，这块请详细阅读文档。
+    - 前面必须有一个空行隔开
+
+一些OK的例子：
+
 ```
-You are all set! Now cdinto any `git` repository and use `git cz` instead of `git commit` and you will find the `commitizen` prompt.
+chore: add git commit hook - commitlint
+```
 
-> Protip: You can use all the `git commit` options with `git cz`, for example: `git cz -a`.
+```
+feat(service): add api - grouped course list
 
+Close #88
+```
+
+```
+refactor: change generator functions to async functions
+
+Because Node.js v8.9 is released as LTS version, async function is already steady to use.
+```
 [CHANGELOG](/CHANGELOG.md)
