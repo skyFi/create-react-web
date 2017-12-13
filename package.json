@@ -13,6 +13,8 @@
     "git:commit": "git add . && git cz",
     "release": "standard-version --commit-all",
     "git:push": "git push --follow-tags origin master",
+    "onekey": "npm run git:commit && npm run git:push",
+    "onekey:release": "npm run git:commit && npm run release && npm run git:push",
     "print-config": "node -p \"require('config')\"",
     "analyse": "gulp clean && gulp analyse",
     "dev": "gulp clean && gulp dev",
