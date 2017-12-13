@@ -56,6 +56,79 @@
 
 * (_developing_)
 
+## 路由规则
+
+### 一般命名参数(`:foo`)
+
+```javascript
+path = '/:foo/:bar'
+url = '/test/route'
+// => params = { foo: 'test', bar: 'route' }
+```
+
+* 需要注意的是，一般命名参数必须是字母或者数字和下划线 (`[A-Za-z0-9_]`)
+
+```javascript
+path = '/(apple-)?icon-:res(\\d+).png'
+url = '/icon-76.png'
+// => params = { res: 76 }
+```
+
+### 参数修饰符(`?`)
+
+```javascript
+path = '/:foo/:bar?'
+url = '/test'
+// => params = { foo: 'test' }
+
+url = '/test/route'
+// => params = { foo: 'test', bar: 'route' }
+```
+* 如果只有一个参数，那么写在前面的`?`也有同样的作用
+
+### 通配符(`*`)
+
+```javascript
+path = '/:foo*'
+url = '/'
+// => params = { foo: undefined }
+
+url = '/bar/baz'
+// => params = { foo: 'bar/baz' }
+```
+
+### 匹配符(`+`)
+
+```javascript
+path = '/:foo+'
+url = '/'
+// => null 不匹配
+
+url = '/bar/baz'
+// => params = { foo: 'bar/baz' }
+```
+
+### 自定义匹配规则(正则规则，但是(`[^\/]+`)需要转义)
+
+```javascript
+path = '/:foo(\\d+)'
+url = '/123'
+// => params = { foo: 123 }
+
+url = '/abc'
+// => null 不匹配
+```
+
+### 匿名参数(`(.*)`)
+
+```javascript
+path = '/:foo/(.*)'
+url = '/test/route'
+// => params = { foo: 'test' }
+```
+
+内部使用了[`path-to-regexp`](https://www.npmjs.com/package/path-to-regexp)，如果想查看更加详细的文档可以点击查看。
+
 ## Eslint Version
 
 ```bash
