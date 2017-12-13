@@ -1,6 +1,6 @@
 {
   "name": "create-react-web",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "easy to create react web project.",
   "main": "index.js",
   "scripts": {
