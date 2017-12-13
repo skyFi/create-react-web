@@ -1,6 +1,12 @@
 # create-react-web
 
-For web site developer who wants to use React.
+搭建网站前端的一个很好用的脚手架，集合了很多强大的功能，方便使用。
+
+视图层使用`React @16.x`，数据使用`Redux`管理（拥抱`chunk`），路由使用`React Router @4.x`控制，页面脚本使用`webpack`按需打包加载，自动化任务（静态资源自动化管理，`svg`图标自动化组件，`postcss`，代码压缩等等）采用`Gulp`，使用`standard-version`等自管理项目日志，`HOC` + `decorator`助攻服务器渲染（SSR），`Helmet`独立管理分页`TDK(title, description, keywords)`，`meta`，`link`等。
+
+使用最新语法开发，`async/await`随便用，两端（服务端、前端）同构，`babel`解析，飞一般的开发速度。
+
+> For web site developer who wants to use React. 
 
 ## Run Env.
 
@@ -79,6 +85,10 @@ npm run commit-release:install
 // 脚本辅助提交代码，书写提交信息，也可以使用自己喜欢的提交方式，但是需要注意提交文档的格式
 npm run git:commit
 
+// 推送服务器
+npm run git:push
+
+// `release`需要在`master`分支上操作
 // 预查看发布信息
 npm run release -- --dry-run
 
@@ -86,17 +96,16 @@ npm run release -- --dry-run
 npm run release
 ```
 
+为了方便使用，有以下脚本糖可以使用：
 #### 使用脚本糖
 
 ```bash
 // 一键提交代码，并推送到服务端
-npm run onekey
+npm run fly
 
-// 一键提交代码，发布新版本，并推送到服务端
-npm run onekey:release
+// 切换`master`分支并更新，发布新版本，推送服务端，一键搞定
+npm run fly:release
 ```
-
-* 需要注意的是，检查当前所在分支，发布新版本需要在`master`分支
 
 ### 提交信息的编写
 
@@ -150,4 +159,5 @@ refactor: change generator functions to async functions
 
 Because Node.js v8.9 is released as LTS version, async function is already steady to use.
 ```
+
 [CHANGELOG](/CHANGELOG.md)
