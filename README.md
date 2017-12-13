@@ -85,6 +85,19 @@ npm run release -- --dry-run
 // 确认无误后发布
 npm run release
 ```
+
+#### 使用脚本糖
+
+```bash
+// 一键提交代码，并推送到服务端
+npm run onekey
+
+// 一键提交代码，发布新版本，并推送到服务端
+npm run onekey:release
+```
+
+* 需要注意的是，检查当前所在分支，发布新版本需要在`master`分支
+
 ### 提交信息的编写
 
 git提交信息需遵循Angular.js提出的规范（[AngularJS Git Commit Message Conventions](https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y/edit)）
