@@ -48,7 +48,7 @@ rules:
   no-with: error
   no-void: error
   radix: error
-  strict: error
+  # strict: warn
   no-delete-var: error
   array-bracket-spacing:
     - error

@@ -1,4 +1,4 @@
-
+'use strict';
 
 import log from 'rainbowlog';
 import React from 'react';
@@ -14,7 +14,6 @@ import routes from '../../core/router';
 import reducers from '../../core/reducer';
 import states from '../../core/state';
 import { reload } from '../../core/lib/funcs';
-const version = global['config_version'] = require('../../../version.json').version;
 
 // 监听文件变换
 let _routes = routes;
@@ -133,10 +132,10 @@ module.exports = function(req, res) {
     return {
       html,
       helmet,
-      version,
+      version: require('../../../version.json').version,
       __INITIAL_STATE__: stateString,
-      cdn: config.cdn,
-      dns: config.dns,
+      cdn: config.cdn || '',
+      dns: config.dns || [],
       bundlePostfix: process.env.NODE_ENV === 'development' ? `?timestamp=${Date.now()}` : '',
     };
   })().then((data) => {
@@ -150,8 +149,8 @@ module.exports = function(req, res) {
     log.error(err.stack || err);
     res.status(500).render('error.html', {
       number: 500,
-      cdn: config.cdn,
-      dns: config.dns,
+      cdn: config.cdn || '',
+      dns: config.dns || [],
     });
   });
 };

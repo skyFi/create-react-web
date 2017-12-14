@@ -21,7 +21,7 @@ function iconGeneration() {
       .replace(/<title>.*<\/title>\n/ig, '')
       .replace(/<desc>.*<\/desc>\n/ig, '')
       .replace(/<defs>.*<\/defs>\n/ig, '\n')
-      .replace(/([a-zA-Z])-([a-zA-Z])/ig, function(a, b, c) {
+      .replace(/([a-zA-Z])-([a-zA-Z])/ig, (a, b, c) => {
         return `${b}${c.toUpperCase()}`;
       })
       .replace(/ +/ig, ' ')
@@ -46,7 +46,7 @@ export default ${capitalize(camelCase(filename))};
     file.contents = new Buffer(icon);
     this.push(file);
     callback();
-  }, function(callback) {
+  }, (callback) => {
     // just pipe data next, just callback to indicate that the stream's over
     callback();
   }, 16);

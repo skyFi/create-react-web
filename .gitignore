@@ -68,3 +68,4 @@ tmp/**
 *.iml
 *-manifest.json
 version.json
+config.json

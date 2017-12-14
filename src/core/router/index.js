@@ -1,6 +1,5 @@
 /* eslint import/no-dynamic-require:0 */
 import React from 'react';
-import get from 'lodash/get';
 import Bundle from './bundle';
 import { reload } from '../lib/funcs';
 

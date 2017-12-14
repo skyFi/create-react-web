@@ -6,4 +6,7 @@ module.exports = {
   dns: [],
   cdn: '',
   apiTimeout: 5000,
+  mock: {
+    port: 8088
+  }
 };

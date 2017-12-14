@@ -25,7 +25,7 @@ class Home extends React.Component {
     return (
       <div className="container-home">
         <Helmet>
-          <title>{user.username} home!</title>
+          <title>{`${user.username} home!`}</title>
           <meta name="keywords" content={`${user.username}， ${favorites.join('，')}`} />
           <meta name="description" content="description from page component." />
         </Helmet>

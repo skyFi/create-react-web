@@ -2,10 +2,8 @@ import React from 'react';
 import { Switch } from 'react-router-dom';
 import { reduxConnect, withRouter } from 'react-web-helper';
 import { renderRoutes } from 'react-router-config';
-import matchPath from '../../core/lib/match_path';
 import Menu from '../component/menu';
 import routes from '../../core/router/index';
-import config from '../../core/common/config';
 
 @withRouter() // 当有 renderRoutes 的时候，这个必须放在最外层，否则页面路由切换不过来
 @reduxConnect()

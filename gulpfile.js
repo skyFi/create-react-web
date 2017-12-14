@@ -16,8 +16,9 @@ const uglify = require('gulp-uglify');
 const babel = require('gulp-babel');
 const file = require('gulp-file');
 const rename = require('gulp-rename');
-const config = require('./src/core/common/config');
 const iconPlugin = require('./icon-plugin');
+const config = require('./src/core/common/config');
+
 
 // 开发
 let isDev = false;
@@ -34,15 +35,6 @@ gulp.task('clean', () => {
 // 复制文件
 gulp.task('copy', () => {
   return merge(
-    // 复制配置文件
-    gulp.src('src/core/common/config-*.js')
-      .pipe(rename((path) => {
-        path.basename = path.basename.split(/-/ig).slice(1).join('-');
-        path.extname = '.js';
-      }))
-      .pipe(changed('config'))
-      .pipe(gulp.dest('config')),
-
     // 复制图片
     gulp.src('src/core/asset/img/**/*')
       .pipe(changed('public/images'))
@@ -67,7 +59,7 @@ gulp.task('copy', () => {
 
     // 写入less配置
     gulp.src('src/core/page/style/common/config.less')
-      .pipe(file('config.less', `@cdn: '${config.cdn}';`))
+      .pipe(file('config.less', `@cdn: '${config.cdn || ''}';`))
       .pipe(gulp.dest('src/core/page/style/common')),
 
     // 生成SVG
@@ -86,73 +78,10 @@ gulp.task('revision', () => {
     return;
   }
   // 生成版本号
-  config.version = Math.round(Math.random() * 10000000) + 10000000;
+  const version = Math.round(Math.random() * 10000000) + 10000000;
   // 替换配置信息
-  fs.writeFileSync(path.join(__dirname, '/version.json'), `{"version": "${config.version}"}`, 'utf-8');
+  fs.writeFileSync(path.join(__dirname, '/version.json'), `{"version": "${version}"}`, 'utf-8');
   revisioned = true;
-});
-
-// 配置打包文件
-gulp.task('webpack-config', (callback) => {
-  webpack({
-    watch: isDev,
-    entry: {
-      vendors: [
-        './src/core/common/config.js',
-      ],
-    },
-    output: {
-      path: `${__dirname}/public/`,
-      filename: `config.${config.version}.js`,
-      library: 'config',
-      // libraryTarget: 'global',
-    },
-    module: {
-      loaders: [{
-        test: /\.js$/,
-        exclude: /(node_modules|bower_components)/,
-        loaders: ['babel-loader?presets[]=react&presets[]=es2015&plugins[]=transform-runtime']
-      }]
-    },
-    plugins: [
-      new webpack.DllPlugin({
-        path: `${__dirname}/config-manifest.json`,
-        name: 'config',
-        context: __dirname,
-      }),
-      (!isDev && new webpack.optimize.UglifyJsPlugin({
-        minimize: true,
-        output: {
-          comments: false,
-        },
-        compress: {
-          warnings: false,
-        },
-      })) || (() => {}),
-      new webpack.DefinePlugin({
-        'process.env.NODE_ENV': isDev ? '"development"' : '"production"',
-      }),
-    ],
-  }, (err, stats) => {
-    if (err) {
-      console.log(err);
-    }
-
-    if (stats.compilation.errors.length > 0) {
-      console.log(stats.compilation.errors[0].message);
-    }
-
-    console.log(`${color.cyan('webpack-config')}: done ${color.magenta(`${stats.toJson({ timing: true }).time} ms`)}`);
-
-    if (!configCallbacked) {
-      configCallbacked = true;
-      callback();
-    }
-
-    if (!err && stats.compilation.errors.length === 0) {
-      process.emit('webpack-rebundled');
-    }
-  });
 });
 
 // 打包项目中的三方包
@@ -172,7 +101,7 @@ gulp.task('webpack-dll', (callback) => {
     },
     output: {
       path: path.join(__dirname, 'public'),
-      filename: `vendors.${config.version}.js`,
+      filename: `vendors.${require('./version').version}.js`,
       library: '[name]',
     },
     plugins: [
@@ -222,7 +151,7 @@ gulp.task('webpack-page', (callback) => {
     ],
     output: {
       path: path.join(__dirname, 'public'),
-      filename: `page.${config.version}.js`,
+      filename: `page.${require('./version').version}.js`,
       publicPath: '/',
       chunkFilename: 'c/[name].[chunkhash:6].chunk.js',
     },
@@ -288,11 +217,7 @@ gulp.task('webpack-page', (callback) => {
         context: __dirname,
         manifest: require('./dll-manifest.json'),
       }),
-      new webpack.DllReferencePlugin({
-        context: __dirname,
-        manifest: require('./config-manifest.json'),
-      }),
-      new ExtractTextPlugin(`page.${config.version}.css`),
+      new ExtractTextPlugin(`page.${require('./version').version}.css`),
       (!isDev && new webpack.optimize.UglifyJsPlugin({
         minimize: true,
         output: {
@@ -365,10 +290,17 @@ gulp.task('server', () => {
   require('./index.js');
 });
 
+// 启动mock服务器
+gulp.task('mock-server', () => {
+  process.env.NODE_ENV = 'development';
+  require('./mock-index');
+});
+
 // 分析打包文件
 gulp.task('rebuild-icon', ['clean', 'copy']);
-gulp.task('analyse', ['analyse-option', 'revision', 'webpack-config', 'webpack-dll', 'webpack-page']);
-gulp.task('dev', gulpSequence('watch', 'copy', 'revision', 'webpack-config', 'webpack-dll', 'webpack-page', 'server'));
+gulp.task('analyse', ['watch', 'analyse-option', 'revision', 'webpack-dll', 'webpack-page']);
+gulp.task('dev', gulpSequence('watch', 'copy', 'revision', 'webpack-dll', 'webpack-page', 'server'));
+gulp.task('mock', gulpSequence('watch', 'mock-server'));
 
 // bundle分析器配置
 function BundleAnalyzerOptions(port) {
