@@ -18,6 +18,7 @@ app.engine('html', ejs.renderFile);
 
 // 按需加载的js文件
 app.use('/c', express.static(path.join(__dirname, '../../public/chunk'), { maxAge: 86400000 * 30 }));
+
 // 服务器静态文件加载
 app.use(express.static(path.join(__dirname, '../../public'), { maxAge: 86400000 * 30 }));
 app.use(require('compression')());
