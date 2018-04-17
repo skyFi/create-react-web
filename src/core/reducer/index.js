@@ -11,13 +11,13 @@ export default function (state = {}, { err, type, _key, _value, ...rest }) {
 
       // server side rending init state.
       case 'server_side/init_state':
-        return Object.assign({}, state, rest);
+        return { ...state, ...rest };
 
       // some other actions
       // ...
 
       default:
-        return state;
+        return { ...state };
     }
   }
 }
